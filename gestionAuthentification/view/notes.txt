@@ -1,0 +1,92 @@
+
+/** */
+user : tableau dans SESSION
+SESSIon=[ 'use1'=>['']]
+
+
+/**/ 
+label  :
+input  : 
+Value  : Par defaut on affiche si il y a une valeur 
+Span   : Afficher les erreurs 
+
+
+<?php
+session_start();
+
+/**Debut de la session */
+
+/**1 fonction Verificatrice de l'mail 
+
+function is_mail(string $mail) : bool 
+{
+    if (filter_var($mail, FILTER_VALIDATE_EMAIL))
+    {
+        $_SESSION["login_error"] = null;
+        return true;
+    }
+    else { 
+        $_SESSION["login_error"] = "Veuillez entrer un mail valide";
+        return false;
+    } 
+}
+*/
+/**2- fonction Verificatrice de champ vide 
+function is_empty (string $name, string $error_name, $error_message) : bool 
+{
+    if (empty($name))
+    {
+        $_SESSION[$error_name] = $error_message;
+        return true;
+    }
+    else 
+    { 
+        $_SESSION[$error_name] = null; 
+        return false;
+    } 
+}
+*/
+
+/**Contoller de la page login */
+/*
+if($_POST["submit_button"] === "login")
+{
+
+    $mail_exist = is_mail($_POST["login"]);
+    var_dump($_SESSION);
+
+
+    if(  $mail_exist )
+    {
+        if($_POST["role"] == "Visiteur")
+        {
+            include_once("../view/accueil.visiteur.html.php");
+        }
+        if($_POST["role"] == "Admin")
+        {
+            include_once("../view/accueil.admin.html.php");
+        }
+
+    }
+    else 
+    {
+        include_once("../view/login.html.php");
+    }
+
+}
+*/
+/**Gestion de registrer */
+if($_POST["submit_button"] === "register")
+{
+    $_SESSION[$_POST["login"]] = [
+        'nom'=>$_POST["nom"],
+        'prenom'=>$_POST["prenom"],
+        'login'=>$_POST["login"],
+        'password'=>$_POST["password"],
+        'role'=>$_POST["role"],
+    ];
+    var_dump($_SESSION);
+    echo ("<a href='../view/login.html.php'>Se connecter</a>");
+
+}
+?> 
